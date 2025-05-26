@@ -10,15 +10,24 @@ resource "aws_security_group" "sg" {
 }
 
 # Inbound Rule: Allow all TCP traffic from anywhere
-resource "aws_vpc_security_group_ingress_rule" "allow_nexus_port" {
-  security_group_id = aws_security_group.sg.id
-  description       = "Allow-Nexus-inbound-traffic"
-  cidr_ipv4         = "0.0.0.0/0"
-  from_port         = 8081
-  to_port           = 8081
-  ip_protocol       = "tcp"
-  tags = { Name = "allow_nexus_port" }
+locals {
+  nexus_ports = [22, 80, 8081]
 }
+
+resource "aws_vpc_security_group_ingress_rule" "allow_nexus_ports" {
+  for_each          = toset(local.nexus_ports)
+  security_group_id = aws_security_group.sg.id
+  description       = "Allow inbound traffic on port ${each.value}"
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = each.value
+  to_port           = each.value
+  ip_protocol       = "tcp"
+
+  tags = {
+    Name = "allow_port_${each.value}"
+  }
+}
+
 
 # Outbound Rule: Allow all protocols to anywhere
 resource "aws_vpc_security_group_egress_rule" "allow_all_outbound" {
