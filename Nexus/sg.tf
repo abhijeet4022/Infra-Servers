@@ -11,7 +11,7 @@ resource "aws_security_group" "sg" {
 
 # Inbound Rule: Allow all TCP traffic from anywhere
 locals {
-  nexus_ports = [22, 80, 8081]
+  nexus_ports = [22, 8081]
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_nexus_ports" {
