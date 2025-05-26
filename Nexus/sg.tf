@@ -1,11 +1,10 @@
 resource "aws_security_group" "sg" {
-  name        = "allow_all_ports"
-  description = "Allow all inbound and outbound traffic"
+  name        = "allow_nexus_ports"
+  description = "Allow inbound and outbound traffic"
   vpc_id      = var.vpc_id
 
   tags = {
-    Name    = "allow_all_ports"
-    project = "roboshop"
+    Name    = "allow_nexus_ports"
   }
 }
 
