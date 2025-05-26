@@ -2,5 +2,5 @@ Nexus/terraform.tfstate
 Nexus/terraform.tfstate.backup
 Nexus/.terraform
 Nexus/.terraform.lock.hcl
-Nexus/terraform.tfvars
+#Nexus/terraform.tfvars
 
