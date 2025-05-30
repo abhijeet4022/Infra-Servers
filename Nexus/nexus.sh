@@ -31,7 +31,7 @@ dnf install -y https://kojipkgs.fedoraproject.org/packages/python-html2text/2020
 
 # Download Nexus
 #URL="https://download.sonatype.com/nexus/3/nexus-3.64.0-04-unix.tar.gz"
-URL="https://sonatype-download.global.ssl.fastly.net/repository/downloads-prod-group/3/nexus-3.78.1-02-unix.tar.gz"
+URL="https://download.sonatype.com/nexus/3/nexus-3.80.0-06-linux-x86_64.tar.gz"
 NEXUSFILE=$(basename "$URL")                            # nexus-3.64.0-04-unix.tar.gz
 NEXUSDIR=$(echo $NEXUSFILE | sed 's/-unix.tar.gz//')    # nexus-3.64.0-04
 TARGETFILE="/opt/$NEXUSFILE"
