@@ -35,7 +35,7 @@ NEXUSFILE=$(basename "$URL")                            # nexus-3.64.0-04-unix.t
 NEXUSDIR=$(echo $NEXUSFILE | sed 's/-unix.tar.gz//')    # nexus-3.64.0-04
 TARGETFILE="/opt/$NEXUSFILE"
 
-wget "$URL" -O "$TARGETFILE" &>/dev/null
+curl -L -o "$TARGETFILE" "$URL" &>/dev/null
 if [ $? -eq 0 ]; then
     echo "[SUCCESS] NEXUS Downloaded Successfully"
 else
