@@ -13,7 +13,7 @@ IU="\e[7m"
 LU="\e[2m"
 N="\e[0m"
 
-#ELV=$(rpm -q basesystem |sed -e 's/\./ /g' |xargs -n 1|grep ^el)
+# Check the OS Version
 ELV=$(rpm -qi basesystem | grep Release  | awk -F . '{print $NF}')
 export OSVENDOR=$(rpm -qi basesystem  | grep Vendor | awk -F : '{print $NF}' | sed -e 's/^ //')
 
@@ -127,19 +127,26 @@ CheckSELinux() {
 export -f CheckSELinux
 
 CheckFirewall() {
+    case $ELV in
+        el9)
+            if systemctl is-active --quiet firewalld; then
+                systemctl stop firewalld
+            fi
 
-#	case $ELV in
-#		el7|el8)
-#			systemctl disable firewalld &>/dev/null
-#			systemctl stop firewalld &>/dev/null
-#		;;
-#		*)  error "OS Version not supported"
-#			exit 1
-#		;;
-#	esac
-	success "Disabled FIREWALL Successfully"
+            if systemctl is-enabled --quiet firewalld; then
+                systemctl disable firewalld
+            fi
+
+            success "Disabled FIREWALL Successfully"
+            ;;
+        *)
+            error "OS Version not supported"
+            exit 1
+            ;;
+    esac
 }
 export -f CheckFirewall
+
 
 DownloadJava() {
 	which java &>/dev/null
@@ -171,8 +178,8 @@ export -f DownloadJava
 
 EnableEPEL() {
 	case $ELV in
-		el7)
-			yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm &>/dev/null
+		el9)
+			dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm &>/dev/null
 		;;
 		*)  error "OS Version not supported"
 			exit 1
