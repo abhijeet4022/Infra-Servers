@@ -30,12 +30,13 @@ fi
 dnf install -y https://kojipkgs.fedoraproject.org/packages/python-html2text/2020.1.16/5.el9/noarch/python3-html2text-2020.1.16-5.el9.noarch.rpm &>/dev/null
 
 # Download Nexus
-#URL="https://download.sonatype.com/nexus/3/nexus-3.64.0-04-unix.tar.gz"
 URL="https://download.sonatype.com/nexus/3/nexus-3.80.0-06-linux-x86_64.tar.gz"
-NEXUSFILE=$(basename "$URL")                            # nexus-3.64.0-04-unix.tar.gz
-NEXUSDIR=$(echo $NEXUSFILE | sed 's/-linux-x86_64.tar.gz//')    # nexus-3.64.0-04
+NEXUSFILE=$(basename "$URL")                            # nexus-3.80.0-06-linux-x86_64.tar.gz
+NEXUSDIR=$(echo $NEXUSFILE | sed 's/-linux-x86_64.tar.gz//')    # nexus-3.80.0-06
 TARGETFILE="/opt/$NEXUSFILE"
 
+
+# Download Nexus under /opt/nexus-3.80.0-06
 curl -L -o "$TARGETFILE" "$URL" &>/dev/null
 if [ $? -eq 0 ]; then
     echo "[SUCCESS] NEXUS Downloaded Successfully"
